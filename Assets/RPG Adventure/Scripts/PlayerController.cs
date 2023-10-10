@@ -11,7 +11,7 @@ namespace RpgAdventure
         public Quaternion PlayerRotation;
         private Camera followCamera;
         public float maxForwardSpeed = 0.4f;
-        //private Vector3 m_CameraPosition;
+        public float gravity = 20.0f;
 
         private PlayerInput m_playerInput;
         private CharacterController m_ChController;
@@ -20,7 +20,8 @@ namespace RpgAdventure
         private float defaultSpeed;
         public float speedModifier = 1;
         public float rotationSpeed;
-        float forwardSpeed;
+        private float forwardSpeed;
+        private float verticalSpeed;
 
         private readonly int m_hashForwardSpeed = Animator.StringToHash("ForwardSpeed");
 
@@ -39,6 +40,7 @@ namespace RpgAdventure
         void FixedUpdate()
         {
             HandleSprintAnimation();
+            HandleVerticalMovement();
 
             Vector3 movement = m_playerInput.MoveInput;
 
@@ -97,6 +99,12 @@ namespace RpgAdventure
                 maxForwardSpeed = Mathf.MoveTowards(maxForwardSpeed, 0.4f, Time.fixedDeltaTime);
 
             }
+        }
+
+        void HandleVerticalMovement()
+        {
+            verticalSpeed = -gravity;
+            m_ChController.Move(verticalSpeed * Vector3.up * Time.fixedDeltaTime);
         }
 
 
