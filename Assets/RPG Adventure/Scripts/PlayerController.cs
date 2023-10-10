@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 
@@ -58,9 +59,9 @@ namespace RpgAdventure
 
             float desiredSpeed = movement.normalized.magnitude * maxForwardSpeed;
 
-            forwardSpeed = Mathf.MoveTowards(forwardSpeed, desiredSpeed, Time.fixedDeltaTime * 25);
+            forwardSpeed = Mathf.MoveTowards(forwardSpeed, desiredSpeed, Time.fixedDeltaTime);
 
-            float acceleration = m_playerInput.IsMoveInput ? forwardSpeed : 0;
+            float acceleration = forwardSpeed;
 
             m_Animator.SetFloat(m_hashForwardSpeed, acceleration);
 
@@ -84,18 +85,17 @@ namespace RpgAdventure
 
         void HandleSprintAnimation()
         {
-            //Debug.Log(Input.GetKey);
-            Debug.Log(Input.GetKey(KeyCode.LeftShift));
+
             if (Input.GetKey(KeyCode.LeftShift))
             {
-                m_Animator.SetBool("Sprint", true);
                 speed = 20f;
-                maxForwardSpeed = 0.6f;
+                maxForwardSpeed = Mathf.MoveTowards(maxForwardSpeed, 0.6f, Time.fixedDeltaTime);
+
             } else
             {
-                m_Animator.SetBool("Sprint", false);
                 speed = defaultSpeed;
-                maxForwardSpeed = 0.4f;
+                maxForwardSpeed = Mathf.MoveTowards(maxForwardSpeed, 0.4f, Time.fixedDeltaTime);
+
             }
         }
 
