@@ -6,9 +6,7 @@ namespace RpgAdventure
 {
     public class BanditBehaviour : MonoBehaviour
     {
-
-        public float detectionRange = 10.0f;
-        public float detectionAngle = 90.0f;
+        public PlayerScanner playerScanner;
         public float timeToStopFollowing = 5.0f;
         public float rotationSpeed = 1.0f;
 
@@ -33,7 +31,7 @@ namespace RpgAdventure
 
         private void Update()
         {
-            var target = DetectPlayer();
+            var target = playerScanner.DetectPlayer(transform);
 
             if (target)
             {
@@ -71,31 +69,6 @@ namespace RpgAdventure
             }
         }
 
-        private PlayerController DetectPlayer()
-        {
-            if (PlayerController.Instance == null)
-            {
-                return null;
-            }
-
-            Vector3 enemyPosition = transform.position;
-            Vector3 disToPlayer = PlayerController.Instance.transform.position - enemyPosition;
-            disToPlayer.y = 0; // to make debugging easier 
-
-            // check if the player is within a general range
-            if (disToPlayer.magnitude <= detectionRange)
-            {
-                // check if the player is within the angle specified in decectionAngle
-                if (Vector3.Dot(disToPlayer.normalized, transform.forward) >
-                    Mathf.Cos(detectionAngle * 0.5f * Mathf.Deg2Rad))
-                {
-                    Debug.Log("player detected");
-                    return PlayerController.Instance;
-                }
-            }
-            return null;
-        }
-
         void HandleRotation()
         {
 
@@ -116,7 +89,7 @@ namespace RpgAdventure
 
             Vector3 rotatedForward = Quaternion.Euler(
                     0,
-                    -detectionAngle * 0.5f,
+                    -playerScanner.detectionAngle * 0.5f,
                     0)
                 * transform.forward;
 
@@ -124,8 +97,8 @@ namespace RpgAdventure
                 transform.position,
                 Vector3.up,
                 rotatedForward,
-                detectionAngle,
-                detectionRange
+                playerScanner.detectionAngle,
+                playerScanner.detectionRange
                 );
         }
 #endif
