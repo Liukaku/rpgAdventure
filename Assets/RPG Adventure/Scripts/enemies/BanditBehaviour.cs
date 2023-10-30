@@ -17,10 +17,15 @@ namespace RpgAdventure
         private float m_TimeSinceLostPlayer = 0.0f;
         private Vector3 banditRotation;
         private Vector3 banditOriginPosition;
+        private Animator m_Animator;
+
+        private readonly int m_HashInPursuitPara = Animator.StringToHash("InPersuit");
+        private readonly int m_IdlePosition = Animator.StringToHash("IdlePosition");
 
         private void Awake()
         {
             m_NavMeshAgent = GetComponent<NavMeshAgent>();
+            m_Animator = GetComponent<Animator>();
             banditOriginPosition = transform.position;
             banditRotation = transform.eulerAngles;
             
@@ -36,11 +41,20 @@ namespace RpgAdventure
                 m_Player = target;
                 Vector3 targetPosition = m_Player.transform.position;
 
+                m_NavMeshAgent.speed = 8.0f;
+                m_NavMeshAgent.acceleration = 14.0f;
+
                 m_NavMeshAgent.SetDestination(targetPosition);
+                m_Animator.SetBool(m_HashInPursuitPara, true);
+                m_Animator.SetBool(m_IdlePosition, false);
             }
             else
             {
-                if(m_TimeSinceLostPlayer >= timeToStopFollowing)
+                m_NavMeshAgent.acceleration = 8.0f;
+                m_Animator.SetBool(m_IdlePosition, m_NavMeshAgent.velocity.magnitude < 0.1f);
+                m_Animator.SetBool(m_HashInPursuitPara, false);
+
+                if (m_TimeSinceLostPlayer >= timeToStopFollowing)
                 {
                     m_TimeSinceLostPlayer = timeToStopFollowing;
                 } else
@@ -85,12 +99,12 @@ namespace RpgAdventure
         void HandleRotation()
         {
 
-            if (transform.position.x == banditOriginPosition.x && transform.position.z == banditOriginPosition.z)
+            if ((transform.position - banditOriginPosition).magnitude < 0.5f )
             {
                 Quaternion currentRotation = transform.rotation;
                 Quaternion targetRotation = Quaternion.Euler(banditRotation);
                 transform.rotation = Quaternion.Lerp(currentRotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
-
+                
             }
         }
 
