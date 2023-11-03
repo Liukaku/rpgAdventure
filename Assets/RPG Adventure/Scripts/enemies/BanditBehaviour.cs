@@ -41,14 +41,12 @@ namespace RpgAdventure
                 m_Player = target;
                 Vector3 targetPosition = m_Player.transform.position;
                 playerScanner.SetDetectionAngle(350.0f);
-            Debug.Log(targetPosition);
 
                 // check if bandit is close enough to attack
                 if ((transform.position - targetPosition).magnitude <= attackDistance)
                 {
-                    Debug.Log("attacking player");
+                    //Debug.Log("attacking player");
                     m_Animator.SetBool(m_HashInPursuitPara, true);
-                    //m_Animator.SetBool(m_IdlePosition, true);
                     m_Animator.SetTrigger(m_HashAttack);
                 } 
                 else

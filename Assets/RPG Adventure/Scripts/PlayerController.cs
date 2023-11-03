@@ -35,6 +35,7 @@ namespace RpgAdventure
         private static PlayerController s_Instance;
 
         private readonly int m_hashForwardSpeed = Animator.StringToHash("ForwardSpeed");
+        private readonly int m_hashAttackOne = Animator.StringToHash("AttackOne");
 
         float mDesiredRotation = 0f;
 
@@ -83,6 +84,13 @@ namespace RpgAdventure
             m_ChController.Move(speed * speedModifier * Time.fixedDeltaTime * targetDirection);
 
             HandleRotation();
+
+            m_Animator.ResetTrigger(m_hashAttackOne);
+            if (m_playerInput.IsAttack)
+            {
+                Debug.Log("attacking!!!");
+                m_Animator.SetTrigger(m_hashAttackOne);
+            }
 
         }
 

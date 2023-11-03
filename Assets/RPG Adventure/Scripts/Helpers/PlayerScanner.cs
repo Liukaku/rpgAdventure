@@ -32,7 +32,7 @@ public class PlayerScanner
             if (Vector3.Dot(disToPlayer.normalized, detector.forward) >
                 Mathf.Cos(detectionAngle * 0.5f * Mathf.Deg2Rad))
             {
-                Debug.Log("player detected");
+                //Debug.Log("player detected");
                 return PlayerController.Instance;
             }
         }
