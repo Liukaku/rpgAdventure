@@ -9,10 +9,9 @@ public class PlayerScanner
     public float detectionRange = 10.0f;
     public float detectionAngle = 90.0f;
 
-    // Update is called once per frame
-    void Update()
+    public void SetDetectionAngle(float detectionAngle)
     {
-        
+        this.detectionAngle = detectionAngle;
     }
 
     public PlayerController DetectPlayer(Transform detector)

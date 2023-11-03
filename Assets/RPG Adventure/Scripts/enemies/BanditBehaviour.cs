@@ -9,6 +9,7 @@ namespace RpgAdventure
         public PlayerScanner playerScanner;
         public float timeToStopFollowing = 5.0f;
         public float rotationSpeed = 1.0f;
+        public float attackDistance = 5.0f;
 
         private PlayerController m_Player;
         private NavMeshAgent m_NavMeshAgent;
@@ -19,6 +20,7 @@ namespace RpgAdventure
 
         private readonly int m_HashInPursuitPara = Animator.StringToHash("InPersuit");
         private readonly int m_IdlePosition = Animator.StringToHash("IdlePosition");
+        private readonly int m_HashAttack = Animator.StringToHash("Attack");
 
         private void Awake()
         {
@@ -38,16 +40,33 @@ namespace RpgAdventure
                 m_TimeSinceLostPlayer = 0f;
                 m_Player = target;
                 Vector3 targetPosition = m_Player.transform.position;
+                playerScanner.SetDetectionAngle(350.0f);
+            Debug.Log(targetPosition);
 
-                m_NavMeshAgent.speed = 8.0f;
-                m_NavMeshAgent.acceleration = 14.0f;
+                // check if bandit is close enough to attack
+                if ((transform.position - targetPosition).magnitude <= attackDistance)
+                {
+                    Debug.Log("attacking player");
+                    m_Animator.SetBool(m_HashInPursuitPara, true);
+                    //m_Animator.SetBool(m_IdlePosition, true);
+                    m_Animator.SetTrigger(m_HashAttack);
+                } 
+                else
+                {
+                    // move towards player
 
-                m_NavMeshAgent.SetDestination(targetPosition);
-                m_Animator.SetBool(m_HashInPursuitPara, true);
-                m_Animator.SetBool(m_IdlePosition, false);
+                    m_NavMeshAgent.speed = 8.0f;
+                    m_NavMeshAgent.acceleration = 14.0f;
+
+                    m_NavMeshAgent.SetDestination(targetPosition);
+                    m_Animator.SetBool(m_HashInPursuitPara, true);
+                    m_Animator.SetBool(m_IdlePosition, false);
+                }
+
             }
             else
             {
+                playerScanner.SetDetectionAngle(110.0f);
                 m_NavMeshAgent.acceleration = 8.0f;
                 m_Animator.SetBool(m_IdlePosition, m_NavMeshAgent.velocity.magnitude < 0.1f);
                 m_Animator.SetBool(m_HashInPursuitPara, false);
