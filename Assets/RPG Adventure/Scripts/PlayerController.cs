@@ -24,6 +24,8 @@ namespace RpgAdventure
         public float rotationSpeed;
         public float speed;
 
+        public MeleeWeapon meleeWeapon;
+
         private PlayerInput m_playerInput;
         private CharacterController m_ChController;
         private Animator m_Animator;
@@ -88,8 +90,8 @@ namespace RpgAdventure
             m_Animator.ResetTrigger(m_hashAttackOne);
             if (m_playerInput.IsAttack)
             {
-                Debug.Log("attacking!!!");
                 m_Animator.SetTrigger(m_hashAttackOne);
+                meleeWeapon.BeginAttack();
             }
 
         }

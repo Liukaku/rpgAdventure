@@ -37,52 +37,58 @@ namespace RpgAdventure
 
             if (target)
             {
-                m_TimeSinceLostPlayer = 0f;
-                m_Player = target;
-                Vector3 targetPosition = m_Player.transform.position;
-                playerScanner.SetDetectionAngle(350.0f);
-
-                // check if bandit is close enough to attack
-                if ((transform.position - targetPosition).magnitude <= attackDistance)
-                {
-                    //Debug.Log("attacking player");
-                    m_Animator.SetBool(m_HashInPursuitPara, true);
-                    m_Animator.SetTrigger(m_HashAttack);
-                } 
-                else
-                {
-                    // move towards player
-
-                    m_NavMeshAgent.speed = 8.0f;
-                    m_NavMeshAgent.acceleration = 14.0f;
-
-                    m_NavMeshAgent.SetDestination(targetPosition);
-                    m_Animator.SetBool(m_HashInPursuitPara, true);
-                    m_Animator.SetBool(m_IdlePosition, false);
-                }
-
+                AttackOrMoveToPlayer(target);
             }
             else
             {
-                playerScanner.SetDetectionAngle(110.0f);
-                m_NavMeshAgent.acceleration = 8.0f;
-                m_Animator.SetBool(m_IdlePosition, m_NavMeshAgent.velocity.magnitude < 0.1f);
-                m_Animator.SetBool(m_HashInPursuitPara, false);
+                // player not within range
+                StopPersuit();
+            }
+        }
 
-                if (m_TimeSinceLostPlayer >= timeToStopFollowing)
-                {
-                    m_TimeSinceLostPlayer = timeToStopFollowing;
-                } else
-                {
-                    m_TimeSinceLostPlayer += Time.deltaTime;
-                }
-                if (m_TimeSinceLostPlayer >= timeToStopFollowing)
-                {
-                    m_Player = null;
-                    m_NavMeshAgent.SetDestination(banditOriginPosition);
-                    Debug.Log("returning to home");
-                }
-                HandleRotation();
+        private void StopPersuit()
+        {
+            playerScanner.SetDetectionAngle(110.0f);
+            m_NavMeshAgent.acceleration = 8.0f;
+            m_Animator.SetBool(m_IdlePosition, m_NavMeshAgent.velocity.magnitude < 0.1f);
+            m_Animator.SetBool(m_HashInPursuitPara, false);
+
+                m_TimeSinceLostPlayer += Time.deltaTime;
+
+            if (m_TimeSinceLostPlayer >= timeToStopFollowing)
+            {
+                m_Player = null;
+                m_NavMeshAgent.SetDestination(banditOriginPosition);
+                Debug.Log("returning to home");
+            }
+            HandleRotation();
+        }
+        
+
+        private void AttackOrMoveToPlayer(PlayerController target)
+        {
+            m_TimeSinceLostPlayer = 0f;
+            m_Player = target;
+            Vector3 targetPosition = m_Player.transform.position;
+            playerScanner.SetDetectionAngle(350.0f);
+
+            // check if bandit is close enough to attack
+            if ((transform.position - targetPosition).magnitude <= attackDistance)
+            {
+                //Debug.Log("attacking player");
+                m_Animator.SetBool(m_HashInPursuitPara, true);
+                m_Animator.SetTrigger(m_HashAttack);
+            }
+            else
+            {
+                // move towards player
+
+                m_NavMeshAgent.speed = 8.0f;
+                m_NavMeshAgent.acceleration = 14.0f;
+
+                m_NavMeshAgent.SetDestination(targetPosition);
+                m_Animator.SetBool(m_HashInPursuitPara, true);
+                m_Animator.SetBool(m_IdlePosition, false);
             }
         }
 
