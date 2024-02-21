@@ -76,6 +76,7 @@ namespace RpgAdventure
             if ((transform.position - targetPosition).magnitude <= attackDistance)
             {
                 //Debug.Log("attacking player");
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(targetPosition), 180 * Time.deltaTime);
                 m_Animator.SetBool(m_HashInPursuitPara, true);
                 m_Animator.SetTrigger(m_HashAttack);
             }
@@ -122,6 +123,14 @@ namespace RpgAdventure
                 rotatedForward,
                 playerScanner.detectionAngle,
                 playerScanner.detectionRange
+                );
+
+            UnityEditor.Handles.DrawSolidArc(
+                transform.position,
+                Vector3.up,
+                rotatedForward,
+                360.0f,
+                playerScanner.meleeDetectionRadius
                 );
         }
 #endif
