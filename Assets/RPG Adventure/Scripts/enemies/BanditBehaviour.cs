@@ -9,7 +9,7 @@ namespace RpgAdventure
         public PlayerScanner playerScanner;
         public float timeToStopFollowing = 5.0f;
         public float rotationSpeed = 1.0f;
-        public float attackDistance = 5.0f;
+        public float attackDistance = 7.0f;
 
         private PlayerController m_Player;
         private NavMeshAgent m_NavMeshAgent;
@@ -33,6 +33,11 @@ namespace RpgAdventure
 
         private void Update()
         {
+            GuardPosition();
+        }
+
+        private void GuardPosition()
+        {
             var target = playerScanner.DetectPlayer(transform);
 
             if (target)
@@ -53,7 +58,7 @@ namespace RpgAdventure
             m_Animator.SetBool(m_IdlePosition, m_NavMeshAgent.velocity.magnitude < 0.1f);
             m_Animator.SetBool(m_HashInPursuitPara, false);
 
-                m_TimeSinceLostPlayer += Time.deltaTime;
+            m_TimeSinceLostPlayer += Time.deltaTime;
 
             if (m_TimeSinceLostPlayer >= timeToStopFollowing)
             {
@@ -75,22 +80,34 @@ namespace RpgAdventure
             // check if bandit is close enough to attack
             if ((transform.position - targetPosition).magnitude <= attackDistance)
             {
-                //Debug.Log("attacking player");
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(targetPosition), 180 * Time.deltaTime);
-                m_Animator.SetBool(m_HashInPursuitPara, true);
-                m_Animator.SetTrigger(m_HashAttack);
+                AttackTarget(targetPosition);
             }
             else
             {
                 // move towards player
+                FollowTarget(targetPosition);
 
-                m_NavMeshAgent.speed = 8.0f;
-                m_NavMeshAgent.acceleration = 14.0f;
-
-                m_NavMeshAgent.SetDestination(targetPosition);
-                m_Animator.SetBool(m_HashInPursuitPara, true);
-                m_Animator.SetBool(m_IdlePosition, false);
             }
+        }
+
+        private void AttackTarget(Vector3 targetPosition)
+        {
+            var attackRotation = transform.rotation = Quaternion.LookRotation(targetPosition);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, attackRotation, 360 * Time.deltaTime);
+
+
+            m_Animator.SetBool(m_HashInPursuitPara, true);
+            m_Animator.SetTrigger(m_HashAttack);
+        }
+
+        private void FollowTarget(Vector3 targetPosition)
+        {
+            m_NavMeshAgent.speed = 8.0f;
+            m_NavMeshAgent.acceleration = 14.0f;
+
+            m_NavMeshAgent.SetDestination(targetPosition);
+            m_Animator.SetBool(m_HashInPursuitPara, true);
+            m_Animator.SetBool(m_IdlePosition, false);
         }
 
         void HandleRotation()
