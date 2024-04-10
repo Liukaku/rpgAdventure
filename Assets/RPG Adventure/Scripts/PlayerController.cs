@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace RpgAdventure
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoBehaviour, IAttackListener
     {
 
         public static PlayerController Instance
@@ -91,7 +91,6 @@ namespace RpgAdventure
             if (m_playerInput.IsAttack)
             {
                 m_Animator.SetTrigger(m_hashAttackOne);
-                meleeWeapon.BeginAttack();
             }
 
         }
@@ -122,6 +121,18 @@ namespace RpgAdventure
                 maxForwardSpeed = Mathf.MoveTowards(maxForwardSpeed, 0.4f, Time.fixedDeltaTime);
 
             }
+        }
+
+        public void MeleeAttackStart()
+        {
+            Debug.Log("starting attack");
+            meleeWeapon.BeginAttack();
+        }
+
+        public void MeleeAttackEnd()
+        {
+            Debug.Log("ending attack");
+            meleeWeapon.EndAttack();
         }
 
         void HandleVerticalMovement()

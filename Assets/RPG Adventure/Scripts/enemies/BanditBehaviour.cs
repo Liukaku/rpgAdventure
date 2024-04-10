@@ -4,7 +4,7 @@ using UnityEngine.AI;
 
 namespace RpgAdventure
 {
-    public class BanditBehaviour : MonoBehaviour
+    public class BanditBehaviour : MonoBehaviour, IAttackListener
     {
         public PlayerScanner playerScanner;
         public float timeToStopFollowing = 5.0f;
@@ -108,6 +108,16 @@ namespace RpgAdventure
             m_NavMeshAgent.SetDestination(targetPosition);
             m_Animator.SetBool(m_HashInPursuitPara, true);
             m_Animator.SetBool(m_IdlePosition, false);
+        }
+
+        public void MeleeAttackEnd()
+        {
+
+        }
+
+        public void MeleeAttackStart()
+        {
+
         }
 
         void HandleRotation()

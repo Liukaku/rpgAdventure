@@ -1,8 +1,9 @@
+using RpgAdventure;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : MonoBehaviour, IAttackListener
 {
 
     void Awake()
@@ -13,5 +14,15 @@ public class EnemyController : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void MeleeAttackEnd()
+    {
+
+    }
+
+    public void MeleeAttackStart()
+    {
+
     }
 }
