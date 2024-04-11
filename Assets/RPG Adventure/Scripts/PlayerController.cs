@@ -125,13 +125,11 @@ namespace RpgAdventure
 
         public void MeleeAttackStart()
         {
-            Debug.Log("starting attack");
             meleeWeapon.BeginAttack();
         }
 
         public void MeleeAttackEnd()
         {
-            Debug.Log("ending attack");
             meleeWeapon.EndAttack();
         }
 
