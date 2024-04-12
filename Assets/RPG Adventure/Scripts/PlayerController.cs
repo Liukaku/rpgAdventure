@@ -50,6 +50,8 @@ namespace RpgAdventure
             m_Animator = GetComponent<Animator>();
             defaultSpeed = speed;
 
+            meleeWeapon.SetOwner(gameObject);
+
             s_Instance = this;
         }
 
