@@ -6,16 +6,36 @@ namespace RpgAdventure
 {
     public partial class Damageable : MonoBehaviour
     {
-        public int maxHealth = 100;
+        
         [Range(0, 360)]
         public float hitAngle = 270f;
+        public int maxHealth = 100;
+        public int CurrentHitpoints { get; private set; }
+
+        private void Awake()
+        {
+            CurrentHitpoints = maxHealth;
+        }
+
 
         public void ApplyDamage(DamageMessage data)
         {
-            Debug.Log("Applying Damage");
-            Debug.Log(data.amount);
-            Debug.Log(data.damageSource);
-            Debug.Log(data.damager);
+            if (CurrentHitpoints <= 0)
+            {
+                return;
+            }
+
+            Vector3 positionToDamager = data.damageSource - transform.position;
+            positionToDamager.y = 0;
+
+            if(Vector3.Angle(transform.forward, positionToDamager) > hitAngle * 0.5) 
+            {
+                Debug.Log("not hitting");
+            } else
+            {
+                Debug.Log("hit");
+            }
+
         }
 
 #if UNITY_EDITOR

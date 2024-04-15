@@ -262,6 +262,23 @@ PrefabInstance:
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ac6da1958200514884aeef1c86d3186, type: 3}
+--- !u!1 &39147229 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 235837531787766097, guid: 23b8b03d51d003041be6fbf2d0e2c1e0, type: 3}
+  m_PrefabInstance: {fileID: 234707955415205000}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &39147237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 39147229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 424e289a2edc7c54cb6e861bc0a741bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &48749492 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1918228519108548, guid: 91d71eb7df97bd444a84c6ac3929ba7f, type: 3}
@@ -3416,6 +3433,10 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 401460296, guid: 23b8b03d51d003041be6fbf2d0e2c1e0, type: 3}
+      propertyPath: hitAngle
+      value: 51
+      objectReference: {fileID: 0}
     - target: {fileID: 235837531787766097, guid: 23b8b03d51d003041be6fbf2d0e2c1e0, type: 3}
       propertyPath: m_Name
       value: Bandit

@@ -1,3 +1,4 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
@@ -13,10 +14,11 @@ namespace RpgAdventure
 
         private PlayerController m_Player;
         private NavMeshAgent m_NavMeshAgent;
-        private float m_TimeSinceLostPlayer = 0.0f;
+        public float m_TimeSinceLostPlayer = 0.0f;
         private Vector3 banditRotation;
-        private Vector3 banditOriginPosition;
+        public Vector3 banditOriginPosition;
         private Animator m_Animator;
+        private EnemyController m_EnemyController;
 
         private readonly int m_HashInPursuitPara = Animator.StringToHash("InPersuit");
         private readonly int m_IdlePosition = Animator.StringToHash("IdlePosition");
@@ -24,6 +26,7 @@ namespace RpgAdventure
 
         private void Awake()
         {
+            m_EnemyController = GetComponent<EnemyController>();
             m_NavMeshAgent = GetComponent<NavMeshAgent>();
             m_Animator = GetComponent<Animator>();
             banditOriginPosition = transform.position;
@@ -60,13 +63,18 @@ namespace RpgAdventure
 
             m_TimeSinceLostPlayer += Time.deltaTime;
 
-            if (m_TimeSinceLostPlayer >= timeToStopFollowing)
+            Vector3 distanceToHome = transform.position - banditOriginPosition;
+            Boolean distanceX = Math.Abs(distanceToHome.x) > 5.0f;
+            Boolean distanceZ = Math.Abs(distanceToHome.z) > 5.0f;
+
+            if (m_TimeSinceLostPlayer >= timeToStopFollowing && distanceX && distanceZ)
             {
                 m_Player = null;
-                m_NavMeshAgent.SetDestination(banditOriginPosition);
+                m_EnemyController.FollowTarget(banditOriginPosition);
                 Debug.Log("returning to home");
+                HandleRotation();
             }
-            HandleRotation();
+            
         }
         
 
@@ -85,30 +93,23 @@ namespace RpgAdventure
             else
             {
                 // move towards player
-                FollowTarget(targetPosition);
+                m_EnemyController.FollowTarget(targetPosition);
 
             }
         }
 
         private void AttackTarget(Vector3 targetPosition)
         {
-            var attackRotation = transform.rotation = Quaternion.LookRotation(targetPosition);
+            var attackRotation = Quaternion.LookRotation(targetPosition);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, attackRotation, 360 * Time.deltaTime);
 
 
             m_Animator.SetBool(m_HashInPursuitPara, true);
+            m_NavMeshAgent.enabled = false;
             m_Animator.SetTrigger(m_HashAttack);
         }
 
-        private void FollowTarget(Vector3 targetPosition)
-        {
-            m_NavMeshAgent.speed = 8.0f;
-            m_NavMeshAgent.acceleration = 14.0f;
 
-            m_NavMeshAgent.SetDestination(targetPosition);
-            m_Animator.SetBool(m_HashInPursuitPara, true);
-            m_Animator.SetBool(m_IdlePosition, false);
-        }
 
         public void MeleeAttackEnd()
         {
@@ -125,6 +126,7 @@ namespace RpgAdventure
 
             if ((transform.position - banditOriginPosition).magnitude < 0.5f )
             {
+                Debug.Log("rotating");
                 Quaternion currentRotation = transform.rotation;
                 Quaternion targetRotation = Quaternion.Euler(banditRotation);
                 transform.rotation = Quaternion.Lerp(currentRotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
