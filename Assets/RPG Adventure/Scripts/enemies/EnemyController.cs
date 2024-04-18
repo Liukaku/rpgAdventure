@@ -7,6 +7,8 @@ using UnityEngine.AI;
 public class EnemyController : MonoBehaviour, IAttackListener
 {
 
+    public Animator Animator { get { return m_Animator; } }
+
     private NavMeshAgent m_NavMeshAgent;
     private Animator m_Animator;
 

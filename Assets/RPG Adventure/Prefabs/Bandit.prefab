@@ -3916,6 +3916,7 @@ GameObject:
   - component: {fileID: 401460301}
   - component: {fileID: 401460291}
   - component: {fileID: 401460296}
+  - component: {fileID: 39147237}
   m_Layer: 6
   m_Name: Bandit
   m_TagString: Untagged
@@ -4025,6 +4026,8 @@ MonoBehaviour:
   timeToStopFollowing: 5
   rotationSpeed: 1
   attackDistance: 5
+  m_TimeSinceLostPlayer: 0
+  banditOriginPosition: {x: 0, y: 0, z: 0}
 --- !u!136 &401460301
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4073,7 +4076,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a870ed1378263954fb8fc58e6de2af49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitAngle: 51
   maxHealth: 100
+  onDamageMessageReceivers:
+  - {fileID: 4132532509614420488}
+--- !u!114 &39147237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 235837531787766097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 424e289a2edc7c54cb6e861bc0a741bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &235844637372805117
 GameObject:
   m_ObjectHideFlags: 0

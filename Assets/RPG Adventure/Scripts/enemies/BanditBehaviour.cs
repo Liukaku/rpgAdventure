@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 namespace RpgAdventure
 {
-    public class BanditBehaviour : MonoBehaviour, IAttackListener
+    public class BanditBehaviour : MonoBehaviour, IAttackListener, IMessageReceiver
     {
         public PlayerScanner playerScanner;
         public float timeToStopFollowing = 5.0f;
@@ -17,18 +17,17 @@ namespace RpgAdventure
         public float m_TimeSinceLostPlayer = 0.0f;
         private Vector3 banditRotation;
         public Vector3 banditOriginPosition;
-        private Animator m_Animator;
         private EnemyController m_EnemyController;
 
         private readonly int m_HashInPursuitPara = Animator.StringToHash("InPersuit");
         private readonly int m_IdlePosition = Animator.StringToHash("IdlePosition");
         private readonly int m_HashAttack = Animator.StringToHash("Attack");
+        private readonly int m_Hurt = Animator.StringToHash("Hurt");
 
         private void Awake()
         {
             m_EnemyController = GetComponent<EnemyController>();
             m_NavMeshAgent = GetComponent<NavMeshAgent>();
-            m_Animator = GetComponent<Animator>();
             banditOriginPosition = transform.position;
             banditRotation = transform.eulerAngles;
             
@@ -54,12 +53,31 @@ namespace RpgAdventure
             }
         }
 
+        public void OnReceiveMessage(IMessageReceiver.MessageType type)
+        {
+            switch (type)
+            {
+                case IMessageReceiver.MessageType.DAMAGED:
+                    break;
+                case IMessageReceiver.MessageType.DEAD:
+                    OnReceiveDamage();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void OnReceiveDamage()
+        {
+            m_EnemyController.Animator.SetTrigger(m_Hurt);
+        }
+
         private void StopPersuit()
         {
             playerScanner.SetDetectionAngle(110.0f);
             m_NavMeshAgent.acceleration = 8.0f;
-            m_Animator.SetBool(m_IdlePosition, m_NavMeshAgent.velocity.magnitude < 0.1f);
-            m_Animator.SetBool(m_HashInPursuitPara, false);
+            m_EnemyController.Animator.SetBool(m_IdlePosition, m_NavMeshAgent.velocity.magnitude < 0.1f);
+            m_EnemyController.Animator.SetBool(m_HashInPursuitPara, false);
 
             m_TimeSinceLostPlayer += Time.deltaTime;
 
@@ -104,9 +122,9 @@ namespace RpgAdventure
             transform.rotation = Quaternion.RotateTowards(transform.rotation, attackRotation, 360 * Time.deltaTime);
 
 
-            m_Animator.SetBool(m_HashInPursuitPara, true);
+            m_EnemyController.Animator.SetBool(m_HashInPursuitPara, true);
             m_NavMeshAgent.enabled = false;
-            m_Animator.SetTrigger(m_HashAttack);
+            m_EnemyController.Animator.SetTrigger(m_HashAttack);
         }
 
 

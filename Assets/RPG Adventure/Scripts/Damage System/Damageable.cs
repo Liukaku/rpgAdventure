@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static RpgAdventure.IMessageReceiver;
 
 namespace RpgAdventure
 {
@@ -12,15 +13,38 @@ namespace RpgAdventure
         public int maxHealth = 100;
         public int CurrentHitpoints { get; private set; }
 
+        public float invulnTime = 0.5f;
+
+        private bool isInvuln = false;
+        public float timeSinceLastHit = 0.0f;
+
+
+
+        public List<MonoBehaviour> onDamageMessageReceivers;
+
         private void Awake()
         {
             CurrentHitpoints = maxHealth;
         }
 
+        public void Update()
+        {
+            if (isInvuln)
+            {
+                timeSinceLastHit += Time.deltaTime;
+
+                if (timeSinceLastHit > invulnTime)
+                {
+                    isInvuln = false;
+                    timeSinceLastHit = 0.0f;
+                }
+            }
+        }
+
 
         public void ApplyDamage(DamageMessage data)
         {
-            if (CurrentHitpoints <= 0)
+            if (CurrentHitpoints <= 0 || isInvuln)
             {
                 return;
             }
@@ -30,10 +54,22 @@ namespace RpgAdventure
 
             if(Vector3.Angle(transform.forward, positionToDamager) > hitAngle * 0.5) 
             {
-                Debug.Log("not hitting");
-            } else
+                return;
+            }
+
+            isInvuln = true;
+
+            CurrentHitpoints -= data.amount;
+
+            var messageType = CurrentHitpoints <= 0 ? MessageType.DEAD : MessageType.DAMAGED;
+            
+            for(int i = 0; i < onDamageMessageReceivers.Count; i++)
             {
-                Debug.Log("hit");
+                var receiver = onDamageMessageReceivers[i] as IMessageReceiver;
+
+                receiver.OnReceiveMessage(messageType);
+                
+
             }
 
         }
