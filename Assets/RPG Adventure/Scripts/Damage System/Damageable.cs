@@ -44,6 +44,7 @@ namespace RpgAdventure
 
         public void ApplyDamage(DamageMessage data)
         {
+            Debug.Log(isInvuln);
             if (CurrentHitpoints <= 0 || isInvuln)
             {
                 return;

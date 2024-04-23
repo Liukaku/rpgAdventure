@@ -23,6 +23,7 @@ namespace RpgAdventure
         private readonly int m_IdlePosition = Animator.StringToHash("IdlePosition");
         private readonly int m_HashAttack = Animator.StringToHash("Attack");
         private readonly int m_Hurt = Animator.StringToHash("Hurt");
+        private readonly int m_Dead = Animator.StringToHash("Dead");
 
         private void Awake()
         {
@@ -58,13 +59,19 @@ namespace RpgAdventure
             switch (type)
             {
                 case IMessageReceiver.MessageType.DAMAGED:
+                    OnReceiveDamage();
                     break;
                 case IMessageReceiver.MessageType.DEAD:
-                    OnReceiveDamage();
+                    onDead();
                     break;
                 default:
                     break;
             }
+        }
+
+        private void onDead()
+        {
+            m_EnemyController.Animator.SetTrigger(m_Dead);
         }
 
         private void OnReceiveDamage()
