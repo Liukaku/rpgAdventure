@@ -26,12 +26,33 @@ public class EnemyController : MonoBehaviour, IAttackListener
         
     }
 
+    public void HandleRotation(Transform npc, Vector3 originalPos, Vector3 banditRotation, float rotationSpeed)
+    {
+
+        if ((npc.position - originalPos).magnitude < 0.5f)
+        {
+            Debug.Log("rotating");
+            Quaternion currentRotation = npc.rotation;
+            Quaternion targetRotation = Quaternion.Euler(banditRotation);
+            npc.rotation = Quaternion.Lerp(currentRotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
+
+        }
+    }
+
+    public void ReturnHome(Transform npc, Vector3 originalPos, Vector3 banditRotation, float rotationSpeed)
+    {
+        FollowTarget(originalPos);
+        Debug.Log("returning to home");
+        HandleRotation(npc, originalPos, banditRotation, rotationSpeed);
+    }
+
     public void FollowTarget(Vector3 targetPosition)
     {
         m_NavMeshAgent.speed = 8.0f;
         m_NavMeshAgent.acceleration = 14.0f;
+        Debug.Log("navmesh enabled:" + m_NavMeshAgent.enabled);
         if (!m_NavMeshAgent.enabled) { m_NavMeshAgent.enabled = true; }
-
+        Debug.Log("Target: " + targetPosition);
         m_NavMeshAgent.SetDestination(targetPosition);
         m_Animator.SetBool(m_HashInPursuitPara, true);
         m_Animator.SetBool(m_IdlePosition, false);

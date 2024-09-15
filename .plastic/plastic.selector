@@ -1,0 +1,4 @@
+repository "RPG Adventure@deazee@cloud"
+  path "/"
+    br "/main"
+    co "/main"

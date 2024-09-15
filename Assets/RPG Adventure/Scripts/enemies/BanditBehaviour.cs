@@ -43,6 +43,7 @@ namespace RpgAdventure
         {
             var target = playerScanner.DetectPlayer(transform);
 
+            // player within sight radius
             if (target)
             {
                 AttackOrMoveToPlayer(target);
@@ -107,18 +108,21 @@ namespace RpgAdventure
         {
             m_TimeSinceLostPlayer = 0f;
             m_Player = target;
-            Vector3 targetPosition = m_Player.transform.position;
+            Vector3 targetPosition = m_Player.transform.position - transform.position;
             playerScanner.SetDetectionAngle(350.0f);
 
             // check if bandit is close enough to attack
-            if ((transform.position - targetPosition).magnitude <= attackDistance)
+            Debug.Log(targetPosition.magnitude <= attackDistance);
+            if (targetPosition.magnitude <= attackDistance)
             {
-                AttackTarget(targetPosition);
+                Debug.Log("Attacking player");
+                AttackTarget(targetPosition - transform.position);
             }
             else
             {
+                Debug.Log("moving to player");
                 // move towards player
-                m_EnemyController.FollowTarget(targetPosition);
+                m_EnemyController.FollowTarget(m_Player.transform.position);
 
             }
         }

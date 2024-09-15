@@ -736,11 +736,11 @@ PlayerSettings:
     m_VersionName: 
   apiCompatibilityLevel: 6
   activeInputHandler: 0
-  cloudProjectId: 
+  cloudProjectId: 78556307-2dcc-40e0-b87a-f386b19224da
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: 
-  organizationId: 
+  projectName: RPG Adventure
+  organizationId: deazee
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   playerDataPath: 

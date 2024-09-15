@@ -11,7 +11,7 @@ namespace RpgAdventure
         // Update is called once per frame
         void Update()
         {
-
+            
             if (Input.GetMouseButtonDown(1))
             {
                 freeLookCamera.m_XAxis.m_MaxSpeed = 400;
