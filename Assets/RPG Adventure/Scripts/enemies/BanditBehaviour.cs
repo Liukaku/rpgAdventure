@@ -116,7 +116,7 @@ namespace RpgAdventure
             if (targetPosition.magnitude <= attackDistance)
             {
                 Debug.Log("Attacking player");
-                AttackTarget(targetPosition - transform.position);
+                AttackTarget(targetPosition);
             }
             else
             {

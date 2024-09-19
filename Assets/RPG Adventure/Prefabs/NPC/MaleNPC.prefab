@@ -1823,6 +1823,7 @@ GameObject:
   - component: {fileID: 3329827750495863909}
   - component: {fileID: 3419989457758190019}
   - component: {fileID: 3436435518416989759}
+  - component: {fileID: -7425908307224979069}
   m_Layer: 0
   m_Name: MaleNPC
   m_TagString: Untagged
@@ -1913,6 +1914,19 @@ MonoBehaviour:
     - prefab: {fileID: 100000, guid: 790f4551bb671cc43bea7a0943c1162f, type: 3}
     slots: 4
   disabledGraySkeleton: {fileID: 0}
+--- !u!114 &-7425908307224979069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3324084311177425805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4442efaf3e81ef498e382132e0124f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_uid: 68b586a4-4de4-45d9-aeff-ee036dffc3e0
 --- !u!1 &3324086926106462973
 GameObject:
   m_ObjectHideFlags: 0
