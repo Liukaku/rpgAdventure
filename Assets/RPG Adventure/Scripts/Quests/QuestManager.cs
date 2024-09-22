@@ -27,6 +27,7 @@ namespace RpgAdventure
         public void Awake()
         {
             LoadQuestsFromDB();
+            AssignQuests();
         }
 
         private void LoadQuestsFromDB()
@@ -36,7 +37,29 @@ namespace RpgAdventure
             var loadedQuests = JsonHelper.GetJsonFromArray<Quest>(json);
             quests = new Quest[loadedQuests.Length];
             quests = loadedQuests;
-            Debug.Log(quests);
+        }
+
+        private void AssignQuests()
+        {
+            QuestGiver[] questGivers = FindObjectsOfType<QuestGiver>();
+            if(questGivers.Length > 0 && questGivers != null)
+            {
+                foreach (var questGiver in questGivers)
+                {
+                    AssignQuestTo(questGiver);
+                }
+            }
+        }
+
+        private void AssignQuestTo(QuestGiver questGiver)
+        {
+            foreach (var quest in quests)
+            {
+                if(quest.questGiver == questGiver.GetComponent<UniqueId>().uid)
+                {
+                    questGiver.quest = quest;
+                }
+            }
         }
 
     }
