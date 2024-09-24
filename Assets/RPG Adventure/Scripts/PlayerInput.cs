@@ -6,13 +6,20 @@ namespace RpgAdventure
 {
     public class PlayerInput : MonoBehaviour
     {
+        public static PlayerInput Instance { get { return s_Instance; } }
 
+        private static PlayerInput s_Instance;
         private Vector3 m_Movement;
         private bool m_Attack;
         private bool m_E;
-        private bool m_isTalking;
+        private Collider[] m_InteractTarget;
 
         public float distanceToInteract = 5.0f;
+
+        public Collider[] interactTarget
+        {
+            get { return m_InteractTarget; }
+        }
 
         public Vector3 MoveInput
         {
@@ -29,9 +36,9 @@ namespace RpgAdventure
             get { return m_Attack; }
         }
 
-        public bool IsTalking
+        private void Awake()
         {
-            get { return m_isTalking; }
+            s_Instance = this;
         }
 
         void Update()
@@ -79,7 +86,7 @@ namespace RpgAdventure
         {
             if (!m_Attack)
             {
-                StartCoroutine(AttackAndWait());
+                StartCoroutine(TriggerAttack());
             }
         }
 
@@ -96,7 +103,7 @@ namespace RpgAdventure
                 if (distanceToTarget <= distanceToInteract)
                 {
                     Debug.Log("hello there");
-                    m_isTalking = true;
+                    //m_isTalking = true;
                 }
             }
         }
@@ -104,16 +111,29 @@ namespace RpgAdventure
         private void HandleEInteract()
         {
             Collider[] colliderArray = Physics.OverlapSphere(transform.position, distanceToInteract);
-            foreach (Collider collider in colliderArray)
-            {
-                if (collider.CompareTag("QuestGiver"))
-                {
-                    Debug.Log("Hello there: " + collider.name);
-                }
-            }
+            StartCoroutine(TriggerInteract(colliderArray));
+
+            //foreach (Collider collider in colliderArray)
+            //{
+            //    StartCoroutine(TriggerInteract(collider));
+            //    if (collider.CompareTag("QuestGiver"))
+            //    {
+            //        Debug.Log("Hello there: " + collider.name);
+
+            //    }
+            //}
         }
 
-        private IEnumerator AttackAndWait()
+        private IEnumerator TriggerInteract(Collider[] interactables)
+        {
+            m_InteractTarget = interactables;
+
+            yield return new WaitForSeconds(0.3f);
+
+            m_InteractTarget = null;
+        }
+
+        private IEnumerator TriggerAttack()
         {
             m_Attack = true;
 
