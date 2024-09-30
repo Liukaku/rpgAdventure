@@ -548,6 +548,42 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 577407376152788415, guid: 4ac6da1958200514884aeef1c86d3186, type: 3}
   m_PrefabInstance: {fileID: 32636843}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &302907711
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 302907712}
+  m_Layer: 0
+  m_Name: DialogOptionList
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &302907712
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 302907711}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1624379255}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &323103671
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -603,6 +639,55 @@ PrefabInstance:
     - target: {fileID: 1870346177817070876, guid: 482de14115d593d449f426a600b0753d, type: 3}
       propertyPath: m_Name
       value: QuestGuy
+      objectReference: {fileID: 0}
+    - target: {fileID: 7677859165185344581, guid: 482de14115d593d449f426a600b0753d, type: 3}
+      propertyPath: dialog.welcomeText
+      value: Hello Strager, What brings you here?
+      objectReference: {fileID: 0}
+    - target: {fileID: 7677859165185344581, guid: 482de14115d593d449f426a600b0753d, type: 3}
+      propertyPath: dialog.queries.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7677859165185344581, guid: 482de14115d593d449f426a600b0753d, type: 3}
+      propertyPath: dialog.queries.Array.data[0].text
+      value: I am looking for a job, is there anything you need help with?
+      objectReference: {fileID: 0}
+    - target: {fileID: 7677859165185344581, guid: 482de14115d593d449f426a600b0753d, type: 3}
+      propertyPath: dialog.queries.Array.data[1].text
+      value: bing bong hellow there
+      objectReference: {fileID: 0}
+    - target: {fileID: 7677859165185344581, guid: 482de14115d593d449f426a600b0753d, type: 3}
+      propertyPath: dialog.queries.Array.data[2].text
+      value: brrriiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiing boing boing
+      objectReference: {fileID: 0}
+    - target: {fileID: 7677859165185344581, guid: 482de14115d593d449f426a600b0753d, type: 3}
+      propertyPath: dialog.queries.Array.data[0].answer.text
+      value: There are 2 bandits north of here that are causing issues. Please defeat
+        them.
+      objectReference: {fileID: 0}
+    - target: {fileID: 7677859165185344581, guid: 482de14115d593d449f426a600b0753d, type: 3}
+      propertyPath: dialog.queries.Array.data[1].answer.text
+      value: ballooooooo
+      objectReference: {fileID: 0}
+    - target: {fileID: 7677859165185344581, guid: 482de14115d593d449f426a600b0753d, type: 3}
+      propertyPath: dialog.queries.Array.data[2].answer.text
+      value: skrttttttttttttttt
+      objectReference: {fileID: 0}
+    - target: {fileID: 7677859165185344581, guid: 482de14115d593d449f426a600b0753d, type: 3}
+      propertyPath: dialog.queries.Array.data[0].answer.questId
+      value: q-2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7677859165185344581, guid: 482de14115d593d449f426a600b0753d, type: 3}
+      propertyPath: dialog.queries.Array.data[1].answer.questId
+      value: q-2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7677859165185344581, guid: 482de14115d593d449f426a600b0753d, type: 3}
+      propertyPath: dialog.queries.Array.data[2].answer.questId
+      value: q-2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7677859165185344581, guid: 482de14115d593d449f426a600b0753d, type: 3}
+      propertyPath: dialog.queries.Array.data[0].answer.forcedDialogQuit
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -1606,7 +1691,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 580214028}
-  m_LocalRotation: {x: 0.1891075, y: -1e-45, z: -0, w: 0.9819564}
+  m_LocalRotation: {x: 0.18910751, y: -1e-45, z: -0, w: 0.9819564}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1689,8 +1774,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f7ba694079c4114ca52616da55ab3ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeToShowOptions: 2
   dialogUI: {fileID: 331333968}
   dialogHeaderText: {fileID: 1624039134}
+  dialogAnswerText: {fileID: 2120946923}
+  dialogOptionList: {fileID: 302907711}
+  dialogOptionPrefab: {fileID: 6713018519901391572, guid: e3243de4f2df1ec499e8f1b7ee4861d4, type: 3}
 --- !u!4 &593796465
 Transform:
   m_ObjectHideFlags: 0
@@ -3037,6 +3126,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2120946922}
+  - {fileID: 302907712}
   m_Father: {fileID: 219428565}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3520,7 +3610,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1947785547}
-  m_LocalRotation: {x: 0.17012778, y: 0.000000016955553, z: -0.0000000029272844, w: 0.985422}
+  m_LocalRotation: {x: 0.17012778, y: -0.000000016955543, z: 0.0000000029272826, w: 0.985422}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3874,7 +3964,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2042435779}
-  m_LocalRotation: {x: 0.17012781, y: 0.000000033911096, z: -0.000000005854568, w: 0.985422}
+  m_LocalRotation: {x: 0.17012781, y: -0.000000033911096, z: 0.000000005854568, w: 0.985422}
   m_LocalPosition: {x: 2.707255, y: -0.71336126, z: -1.8461552}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4370,7 +4460,7 @@ GameObject:
   - component: {fileID: 2120946924}
   - component: {fileID: 2120946923}
   m_Layer: 0
-  m_Name: DialogWelcomeText
+  m_Name: DialogAnswerText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4393,8 +4483,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 85}
-  m_SizeDelta: {x: 580, y: 140}
+  m_AnchoredPosition: {x: 0, y: 94.57308}
+  m_SizeDelta: {x: 580, y: 120.8539}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2120946923
 MonoBehaviour:
