@@ -25,6 +25,7 @@ namespace RpgAdventure
         private void Awake()
         {
             CurrentHitpoints = maxHealth;
+            onDamageMessageReceivers.Add(FindObjectOfType<QuestManager>());
         }
 
         public void Update()
@@ -50,7 +51,7 @@ namespace RpgAdventure
                 return;
             }
 
-            Vector3 positionToDamager = data.damageSource - transform.position;
+            Vector3 positionToDamager = data.damageSource.transform.position - transform.position;
             positionToDamager.y = 0;
 
             if(Vector3.Angle(transform.forward, positionToDamager) > hitAngle * 0.5) 
@@ -68,7 +69,7 @@ namespace RpgAdventure
             {
                 var receiver = onDamageMessageReceivers[i] as IMessageReceiver;
 
-                receiver.OnReceiveMessage(messageType);
+                receiver.OnReceiveMessage(messageType, this, data);
                 
 
             }

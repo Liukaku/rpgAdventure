@@ -1,11 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using static RpgAdventure.IMessageReceiver;
 
 namespace RpgAdventure
 {
-    public class QuestManager : MonoBehaviour
+    public class QuestManager : MonoBehaviour, IMessageReceiver
     {
         public class JsonHelper
         {
@@ -62,5 +64,35 @@ namespace RpgAdventure
             }
         }
 
+        public void OnReceiveMessage(MessageType type, Damageable sender, Damageable.DamageMessage message)
+        {
+            if(type == MessageType.DEAD)
+            {
+                CheckQuestOnEnemyDead(sender, message);
+            }
+        }
+
+        private void CheckQuestOnEnemyDead(Damageable sender, Damageable.DamageMessage message)
+        {
+            var questLog = message.damageSource.GetComponent<QuestLog>();
+            if(questLog == null ) { return; }
+
+            foreach (var quest in questLog.quests)
+            {
+                if(quest.questStatus == QuestStatus.ACTIVE)
+                {
+                    if (quest.type == QuestType.HUNT && Array.Exists(quest.targets, (targetUid) => sender.GetComponent<UniqueId>().uid == targetUid))
+                    {
+                        quest.amount -= 1;
+                    }
+
+                    if (quest.amount == 0)
+                    {
+                        quest.questStatus = QuestStatus.COMPLETED;
+                        Debug.Log("quest complete!");
+                    }
+                }
+            }
+        }
     }
 }

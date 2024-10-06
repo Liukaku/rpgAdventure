@@ -50,9 +50,7 @@ public class EnemyController : MonoBehaviour, IAttackListener
     {
         m_NavMeshAgent.speed = 8.0f;
         m_NavMeshAgent.acceleration = 14.0f;
-        Debug.Log("navmesh enabled:" + m_NavMeshAgent.enabled);
         if (!m_NavMeshAgent.enabled) { m_NavMeshAgent.enabled = true; }
-        Debug.Log("Target: " + targetPosition);
         m_NavMeshAgent.SetDestination(targetPosition);
         m_Animator.SetBool(m_HashInPursuitPara, true);
         m_Animator.SetBool(m_IdlePosition, false);

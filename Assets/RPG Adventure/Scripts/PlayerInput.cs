@@ -110,6 +110,7 @@ namespace RpgAdventure
 
         private void HandleEInteract()
         {
+            Debug.Log("E");
             Collider[] colliderArray = Physics.OverlapSphere(transform.position, distanceToInteract);
             StartCoroutine(TriggerInteract(colliderArray));
 

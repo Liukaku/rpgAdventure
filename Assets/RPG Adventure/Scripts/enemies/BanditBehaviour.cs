@@ -55,7 +55,7 @@ namespace RpgAdventure
             }
         }
 
-        public void OnReceiveMessage(IMessageReceiver.MessageType type)
+        public void OnReceiveMessage(IMessageReceiver.MessageType type, Damageable d, Damageable.DamageMessage m)
         {
             switch (type)
             {
@@ -112,15 +112,12 @@ namespace RpgAdventure
             playerScanner.SetDetectionAngle(350.0f);
 
             // check if bandit is close enough to attack
-            Debug.Log(targetPosition.magnitude <= attackDistance);
             if (targetPosition.magnitude <= attackDistance)
             {
-                Debug.Log("Attacking player");
                 AttackTarget(targetPosition);
             }
             else
             {
-                Debug.Log("moving to player");
                 // move towards player
                 m_EnemyController.FollowTarget(m_Player.transform.position);
 

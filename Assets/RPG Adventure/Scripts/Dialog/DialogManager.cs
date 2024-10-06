@@ -2,6 +2,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace RpgAdventure
@@ -20,8 +21,9 @@ namespace RpgAdventure
         private Dialog m_ActiveDialog;
         private float m_OptionTopPosition;
         private float m_TimerToShowOptions;
+        private bool m_ForceDialogQuit;
 
-        const float c_DistanceBetweenOptions = 32.0f;
+        const float c_DistanceBetweenOptions = 55.0f;
 
         public bool HasActiveDialog { get { return m_ActiveDialog != null; } }
 
@@ -58,13 +60,21 @@ namespace RpgAdventure
             if(m_TimerToShowOptions > 0)
             {
                 m_TimerToShowOptions += Time.deltaTime;
+
+                if(m_TimerToShowOptions >= timeToShowOptions)
+                {
+                    m_TimerToShowOptions = 0;
+                    if (m_ForceDialogQuit)
+                    {
+                        StopDialog();
+                    } else
+                    {
+                        DisplayDialogOptioins();
+                    }
+
+                }
             }
 
-            if(m_TimerToShowOptions >= timeToShowOptions)
-            {
-                m_TimerToShowOptions = 0;
-                DisplayDialogOptioins();
-            }
         }
 
         private void StartDialog()
@@ -89,6 +99,11 @@ namespace RpgAdventure
         {
             HideAnswerText();
             CreateDialogMenu();
+
+            Debug.Log("E");
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+
         }
 
         private void TriggerDialogOptions()
@@ -111,7 +126,7 @@ namespace RpgAdventure
                 m_OptionTopPosition += c_DistanceBetweenOptions;
                 Debug.Log(query.text);
                 Button DialogOption = CreateDialogOption(query.text);
-
+                RegisterOptionClickHandler(DialogOption, query);
             }
         }
 
@@ -126,12 +141,46 @@ namespace RpgAdventure
             return buttonInstance;
         }
 
+        private void RegisterOptionClickHandler(Button DialogOption, DialogQuery query)
+        {
+            EventTrigger trigger = DialogOption.gameObject.AddComponent<EventTrigger>();
+            var pointerDown = new EventTrigger.Entry
+            {
+                eventID = EventTriggerType.PointerDown
+            };
+
+            pointerDown.callback.AddListener((e) =>
+            {
+                if (!String.IsNullOrEmpty(query.answer.questId))
+                {
+                    m_Player.GetComponent<QuestLog>().AddQuest(m_Npc.quest);
+                }
+                if(query.answer.forcedDialogQuit)
+                {
+                    m_ForceDialogQuit = true;
+                }
+                if (!query.isAlwaysAsked)
+                {
+                    query.isAsked = true;
+                }
+                ClearDialogOptions();
+                DisplayAnswerText(query.answer.text);
+                TriggerDialogOptions();
+            });
+
+            trigger.triggers.Add(pointerDown);
+        }
+
         private void StopDialog()
         {
             m_Npc = null;
             m_ActiveDialog = null;
             m_TimerToShowOptions = 0;
             dialogUI.SetActive(false);
+            Debug.Log("no E");
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            m_ForceDialogQuit = false;
         }
 
         private void ClearDialogOptions()

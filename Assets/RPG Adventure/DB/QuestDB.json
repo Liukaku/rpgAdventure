@@ -6,23 +6,23 @@
     "experience": 100,
     "gold": 5,
     "amount": 2,
-    "targets": [ "7a775789-c571-4557-85b8-d673c3dbe0d0" ],
+    "targets": [ "56d13e0f-30e7-483c-a5a6-f01f53fd867c" ],
     "talkTo": null,
     "explore": null,
-    "questGiver": "placeholder-68b586a4-4de4-45d9-aeff-ee036dffc3e0",
+    "questGiver": "9d6c8e52-c87f-4877-8c04-7ed8f840e3dc",
     "type": 0
   },
   {
     "uid": "q-2",
-    "title": "Stealing our money!",
-    "description": "Defeat bandit leader",
+    "title": "Defeat bandit leader!",
+    "description": "Defeat bandit leader pleeeaaaaaaaaaase",
     "experience": 200,
     "gold": 15,
     "amount": 1,
-    "targets": [ "7a775789-c571-4557-85b8-d673c3dbe0d0" ],
+    "targets": [ "0915445a-7efb-4705-bfc5-387b35b9dfd9" ],
     "talkTo": null,
     "explore": null,
-    "questGiver": "68b586a4-4de4-45d9-aeff-ee036dffc3e0",
+    "questGiver": "c5da1164-e14f-481a-9998-aedb5649816c",
     "type": 0
   }
 ]
