@@ -12,8 +12,11 @@ namespace RpgAdventure
         public float hitAngle = 270f;
         public int maxHealth = 100;
         public int CurrentHitpoints { get; private set; }
+        public int experience;
 
         public float invulnTime = 0.5f;
+
+        public LayerMask playerActionReceivers;
 
         private bool isInvuln = false;
         public float timeSinceLastHit = 0.0f;
@@ -25,7 +28,11 @@ namespace RpgAdventure
         private void Awake()
         {
             CurrentHitpoints = maxHealth;
+            if (0 != (playerActionReceivers.value & 1 << gameObject.layer))
+            {
             onDamageMessageReceivers.Add(FindObjectOfType<QuestManager>());
+                onDamageMessageReceivers.Add(FindObjectOfType<PlayerStats>());
+            }
         }
 
         public void Update()

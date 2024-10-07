@@ -7,29 +7,31 @@ using static RpgAdventure.IMessageReceiver;
 
 namespace RpgAdventure
 {
-    public class QuestManager : MonoBehaviour, IMessageReceiver
+    public class JsonHelper
     {
-        public class JsonHelper
+        private class Wrapper<T>
         {
-            private class Wrapper<T>
-            {
-                public T[] array;
-            }
-
-            public static T[] GetJsonFromArray<T>(string json)
-            {
-                string newJson = "{\"array\": " + json + "}";
-                Wrapper<T> wrapper = JsonUtility.FromJson<Wrapper<T>>(newJson);
-                return wrapper.array;
-            }
+            public T[] array;
         }
 
+        public static T[] GetJsonFromArray<T>(string json)
+        {
+            string newJson = "{\"array\": " + json + "}";
+            Wrapper<T> wrapper = JsonUtility.FromJson<Wrapper<T>>(newJson);
+            return wrapper.array;
+        }
+    }
+
+    public class QuestManager : MonoBehaviour, IMessageReceiver
+    {
         public Quest[] quests;
+        private PlayerStats m_PlayerStats;
 
         public void Awake()
         {
             LoadQuestsFromDB();
             AssignQuests();
+            m_PlayerStats = FindObjectOfType<PlayerStats>();
         }
 
         private void LoadQuestsFromDB()
@@ -89,6 +91,7 @@ namespace RpgAdventure
                     if (quest.amount == 0)
                     {
                         quest.questStatus = QuestStatus.COMPLETED;
+                        m_PlayerStats.GainExperience(quest.experience);
                         Debug.Log("quest complete!");
                     }
                 }

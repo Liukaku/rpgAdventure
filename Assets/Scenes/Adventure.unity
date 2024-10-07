@@ -3535,6 +3535,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   quests: []
+--- !u!114 &1830896462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1830896450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f7495fe6866185449e6f48add86e7fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxLevel: 60
+  currentLevel: 0
+  currentExperience: 0
+  availableLevels: 
 --- !u!1 &1832523385
 GameObject:
   m_ObjectHideFlags: 3

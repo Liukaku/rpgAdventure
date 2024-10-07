@@ -4080,6 +4080,9 @@ MonoBehaviour:
   hitAngle: 360
   maxHealth: 40
   invulnTime: 0.5
+  playerActionReceivers:
+    serializedVersion: 2
+    m_Bits: 64
   timeSinceLastHit: 0
   onDamageMessageReceivers:
   - {fileID: 4132532509614420488}
