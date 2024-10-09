@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace RpgAdventure
 {
@@ -7,18 +8,21 @@ namespace RpgAdventure
     {
         public GameObject itemPrefab;
         public LayerMask targetLayer;
+        public UnityEvent<GameObject> eventOnItemPickup;
 
-        void Start()
+        void Awake()
         {
             Instantiate(itemPrefab, transform);
-            //itemPrefab.transform.position = transform.position;
             Destroy(transform.GetChild(0).gameObject);
+            eventOnItemPickup.AddListener(FindObjectOfType<InventoryManager>().OnItemPickup);
         }
 
         private void OnTriggerEnter(Collider other)
         {
             if (0 != (targetLayer.value << other.gameObject.layer))
             {
+                eventOnItemPickup.Invoke(itemPrefab);
+                //FindObjectOfType<InventoryManager>().AddItem(itemPrefab);
                 Destroy(gameObject);
             }
         }
