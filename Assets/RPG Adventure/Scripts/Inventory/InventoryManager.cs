@@ -6,9 +6,24 @@ namespace RpgAdventure
 {
     public class InventoryManager : MonoBehaviour
     {
-        public Dictionary<string, GameObject> inventory = new Dictionary<string, GameObject>();
-        public int inventorySize;
+        public Transform inventoryPanel;
+        public List<InventorySlot> inventory = new List<InventorySlot>();
 
+        private int m_inventorySize;
+
+        private void Awake()
+        {
+            m_inventorySize = inventoryPanel.childCount;
+            CreateInventory(m_inventorySize);
+        }
+
+        private void CreateInventory(int inventorySize)
+        {
+            for (int i = 0; i < inventorySize; i++)
+            {
+                inventory.Add(new InventorySlot(i));
+            }
+        }
 
         public void OnItemPickup(GameObject item)
         {
@@ -17,12 +32,20 @@ namespace RpgAdventure
 
         public void AddItem(GameObject item)
         {
-            if (!inventory.ContainsKey(item.name)) 
+            var inventorySlot = GetFreeSlot();
+            if (inventorySlot == null) 
             {
-                inventory.Add(item.name, item);
-                Debug.Log(item.name);
-                Debug.Log(inventory.Count);
+                Debug.Log("inventory is full");
+                return;
             }
+
+            inventorySlot.Place(item);
+            Debug.Log("added: " + item.name);
+        }
+
+        private InventorySlot GetFreeSlot()
+        {
+            return inventory.Find(slot => slot.itemName == null);
         }
     }
 }
