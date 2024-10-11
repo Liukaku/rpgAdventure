@@ -29,11 +29,11 @@ Transform:
   m_GameObject: {fileID: 5290562841004817341}
   m_LocalRotation: {x: -0.6754151, y: 0.1255169, z: -0.015404312, w: 0.7265141}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -77.831, y: 74.56, z: -65.578}
 --- !u!33 &5290562841001781181
 MeshFilter:
@@ -101,7 +101,16 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   damage: 10
-  attackPoints: []
+  attackPoints:
+  - radius: 0.3
+    offset: {x: -0.04, y: 0.06, z: 0.76}
+    rootTransform: {fileID: 5290562841005172637}
+  - radius: 0.3
+    offset: {x: -0.21, y: 0.06, z: 0.44}
+    rootTransform: {fileID: 5290562841005172637}
+  - radius: 0.3
+    offset: {x: -0.06, y: 0, z: 0.15}
+    rootTransform: {fileID: 5290562841005172637}
 --- !u!114 &6335406598755678245
 MonoBehaviour:
   m_ObjectHideFlags: 0

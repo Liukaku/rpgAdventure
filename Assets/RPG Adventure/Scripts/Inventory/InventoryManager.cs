@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace RpgAdventure
 {
@@ -23,7 +24,29 @@ namespace RpgAdventure
             for (int i = 0; i < inventorySize; i++)
             {
                 inventory.Add(new InventorySlot(i));
+                RegisterSlotHandler(i);
             }
+        }
+
+        private void RegisterSlotHandler(int slotIndex)
+        {
+            var slotBtn = inventoryPanel.GetChild(slotIndex).GetComponent<Button>();
+            slotBtn.onClick.AddListener(() =>
+            {
+                UseItem(slotIndex);
+            });
+        }
+
+        private void UseItem(int slotIndex)
+        {
+            var inventorySlot = GetSlotByIndex(slotIndex);
+
+            if (inventorySlot.itemPrefab == null)
+            {
+                return;
+            }
+
+            PlayerController.Instance.UseItemFrom(inventorySlot);
         }
 
         public void OnItemPickup(ItemSpawner spawner)
@@ -50,6 +73,11 @@ namespace RpgAdventure
         private InventorySlot GetFreeSlot()
         {
             return inventory.Find(slot => slot.itemName == null);
+        }
+
+        private InventorySlot GetSlotByIndex(int index)
+        {
+            return inventory.Find(slot => slot.index == index);
         }
     }
 }

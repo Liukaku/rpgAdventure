@@ -23,6 +23,7 @@ namespace RpgAdventure
         public float speedModifier = 1;
         public float rotationSpeed;
         public float speed;
+        public Transform attackHand;
 
         public MeleeWeapon meleeWeapon;
 
@@ -49,8 +50,6 @@ namespace RpgAdventure
             m_playerInput = GetComponent<PlayerInput>();
             m_Animator = GetComponent<Animator>();
             defaultSpeed = speed;
-
-            meleeWeapon.SetOwner(gameObject);
 
             s_Instance = this;
         }
@@ -139,6 +138,25 @@ namespace RpgAdventure
         {
             verticalSpeed = -gravity;
             m_ChController.Move(verticalSpeed * Vector3.up * Time.fixedDeltaTime);
+        }
+
+        public void UseItemFrom(InventorySlot inventorySlot)
+        {
+            if (meleeWeapon != null)
+            {
+                if (inventorySlot.itemPrefab.name == meleeWeapon.name)
+                {
+                    return;
+                } else
+                {
+                    Destroy(meleeWeapon.gameObject);
+                }
+                
+            }
+            meleeWeapon = Instantiate(inventorySlot.itemPrefab, transform).GetComponent<MeleeWeapon>();
+            meleeWeapon.GetComponent<FixedUpdateFollow>().SetToFollow(attackHand);
+            meleeWeapon.name = inventorySlot.itemPrefab.name;
+            meleeWeapon.SetOwner(gameObject);
         }
 
 

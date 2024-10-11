@@ -16,5 +16,10 @@ namespace RpgAdventure
             transform.position = toFollow.position;
             transform.rotation = toFollow.rotation;
         }
+
+        public void SetToFollow(Transform followee)
+        {
+            toFollow = followee;
+        }
     }
 }

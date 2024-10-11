@@ -11,7 +11,7 @@ namespace RpgAdventure
         private static PlayerInput s_Instance;
         private Vector3 m_Movement;
         private bool m_Attack;
-        private bool m_E;
+        private bool m_Q;
         private Collider[] m_InteractTarget;
 
         public float distanceToInteract = 5.0f;
@@ -47,25 +47,26 @@ namespace RpgAdventure
 
             bool isLeftMouseClick = Input.GetMouseButtonDown(0);
             bool isRightMouseClick = Input.GetMouseButtonDown(1);
-            //if (Input.GetKeyDown(KeyCode.E) && m_E == false)
-            //{
-            //    m_E = true;
-            //}
-            //if (Input.GetKeyUp(KeyCode.E) && m_E == true)
-            //{
-            //    m_E = false;
-            //}
-            //if (m_E == true)
-            //{
-            //    Debug.Log("E");
-            //    Cursor.visible = true;
-            //    Cursor.lockState = CursorLockMode.None;
-            //} else
-            //{
-            //    Debug.Log("no E");
-            //    Cursor.visible = false;
-            //    Cursor.lockState = CursorLockMode.Locked;
-            //}
+            if (Input.GetKeyDown(KeyCode.Q) && m_Q == false)
+            {
+                m_Q = true;
+            }
+            if (Input.GetKeyUp(KeyCode.Q) && m_Q == true)
+            {
+                m_Q = false;
+            }
+            if (m_Q == true)
+            {
+                Debug.Log("Q");
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+            }
+            else
+            {
+                Debug.Log("no Q");
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+            }
 
             if (Input.GetKeyDown(KeyCode.E))
             {
