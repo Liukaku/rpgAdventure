@@ -12,6 +12,8 @@ namespace RpgAdventure
         public float rotationSpeed = 1.0f;
         public float attackDistance = 7.0f;
 
+        public MeleeWeapon weapon;
+
         private PlayerController m_Player;
         private NavMeshAgent m_NavMeshAgent;
         public float m_TimeSinceLostPlayer = 0.0f;
@@ -31,7 +33,14 @@ namespace RpgAdventure
             m_NavMeshAgent = GetComponent<NavMeshAgent>();
             banditOriginPosition = transform.position;
             banditRotation = transform.eulerAngles;
-            
+            weapon.SetOwner(gameObject);
+
+        }
+
+        private void Start()
+        {
+
+            weapon.SetTargetLayer(1 << PlayerController.Instance.gameObject.layer);
         }
 
         private void Update()
@@ -139,12 +148,12 @@ namespace RpgAdventure
 
         public void MeleeAttackEnd()
         {
-
+            weapon.BeginAttack();
         }
 
         public void MeleeAttackStart()
         {
-
+            weapon.EndAttack();
         }
 
         void HandleRotation()

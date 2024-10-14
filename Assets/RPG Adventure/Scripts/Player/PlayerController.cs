@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
+using static RpgAdventure.IMessageReceiver;
 
 namespace RpgAdventure
 {
-    public class PlayerController : MonoBehaviour, IAttackListener
+    public class PlayerController : MonoBehaviour, IAttackListener, IMessageReceiver
     {
 
         public static PlayerController Instance
@@ -34,6 +35,7 @@ namespace RpgAdventure
         private float forwardSpeed;
         private float verticalSpeed;
         private Camera followCamera;
+        private HudManager m_hudManager;
 
         private static PlayerController s_Instance;
 
@@ -49,9 +51,11 @@ namespace RpgAdventure
             m_ChController = GetComponent<CharacterController>();
             m_playerInput = GetComponent<PlayerInput>();
             m_Animator = GetComponent<Animator>();
+            m_hudManager = FindObjectOfType<HudManager>();
             defaultSpeed = speed;
 
             s_Instance = this;
+            m_hudManager.SetMaxHealth(GetComponent<Damageable>().maxHealth);
         }
 
         void FixedUpdate()
@@ -126,12 +130,18 @@ namespace RpgAdventure
 
         public void MeleeAttackStart()
         {
-            meleeWeapon.BeginAttack();
+            if (meleeWeapon != null)
+            {
+                meleeWeapon.BeginAttack();
+            }
         }
 
         public void MeleeAttackEnd()
         {
-            meleeWeapon.EndAttack();
+            if (meleeWeapon != null)
+            {
+                meleeWeapon.EndAttack();
+            }
         }
 
         void HandleVerticalMovement()
@@ -159,7 +169,13 @@ namespace RpgAdventure
             meleeWeapon.SetOwner(gameObject);
         }
 
-
+        public void OnReceiveMessage(MessageType type, Damageable sender, Damageable.DamageMessage message)
+        {
+            if(type == MessageType.DAMAGED)
+            {
+                m_hudManager.SetHealth(sender.CurrentHitpoints);
+            }
+        }
     }
 
 }

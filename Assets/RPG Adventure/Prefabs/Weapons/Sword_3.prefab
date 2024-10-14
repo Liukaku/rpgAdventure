@@ -99,7 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   damage: 10
   attackPoints:
   - radius: 0.3

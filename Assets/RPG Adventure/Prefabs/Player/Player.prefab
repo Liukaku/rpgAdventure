@@ -4028,7 +4028,7 @@ Transform:
   - {fileID: 607028007136142179}
   - {fileID: 687785597}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &661595299251975389
 Animator:
@@ -4128,6 +4128,7 @@ MonoBehaviour:
   speedModifier: 1
   rotationSpeed: 0
   speed: 8
+  attackHand: {fileID: 608913144607132881}
   meleeWeapon: {fileID: 0}
 --- !u!114 &1011026773
 MonoBehaviour:
@@ -4216,7 +4217,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   timeSinceLastHit: 0
-  onDamageMessageReceivers: []
+  onDamageMessageReceivers:
+  - {fileID: 1011026769}
 --- !u!114 &1830896460
 MonoBehaviour:
   m_ObjectHideFlags: 0

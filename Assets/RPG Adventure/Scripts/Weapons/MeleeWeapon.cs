@@ -90,6 +90,11 @@ namespace RpgAdventure
             }
         }
 
+        public void SetTargetLayer(LayerMask targetMask)
+        {
+            targetLayer = targetMask;
+        }
+
         public void BeginAttack()
         {
             m_IsAttack = true;
@@ -107,6 +112,7 @@ namespace RpgAdventure
         {
             m_IsAttack = false;
         }
+
 
 #if UNITY_EDITOR
         private void OnDrawGizmos()
