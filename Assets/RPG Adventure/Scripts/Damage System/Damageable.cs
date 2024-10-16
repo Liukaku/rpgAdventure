@@ -27,7 +27,7 @@ namespace RpgAdventure
 
         private void Awake()
         {
-            CurrentHitpoints = maxHealth;
+            SetInitialHealth();
             if (0 != (playerActionReceivers.value & 1 << gameObject.layer))
             {
             onDamageMessageReceivers.Add(FindObjectOfType<QuestManager>());
@@ -49,10 +49,16 @@ namespace RpgAdventure
             }
         }
 
+        public void SetInitialHealth()
+        {
+            Debug.Log("setting health: " + maxHealth);
+            
+            CurrentHitpoints = maxHealth;
+        }
 
         public void ApplyDamage(DamageMessage data)
         {
-            Debug.Log(isInvuln);
+            //Debug.Log(isInvuln);
             if (CurrentHitpoints <= 0 || isInvuln)
             {
                 return;

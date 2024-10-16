@@ -14,6 +14,7 @@ namespace RpgAdventure
         private bool m_Q;
         private Collider[] m_InteractTarget;
 
+        public bool isPlayerInputBlocked;
         public float distanceToInteract = 5.0f;
 
         public Collider[] interactTarget
@@ -21,19 +22,25 @@ namespace RpgAdventure
             get { return m_InteractTarget; }
         }
 
-        public Vector3 MoveInput
-        {
-            get { return m_Movement; }
-        }
-
         public bool IsMoveInput
         {
             get { return !Mathf.Approximately(MoveInput.magnitude, 0); }
         }
+        public Vector3 MoveInput
+        {
+            get {
+                if (isPlayerInputBlocked) 
+                {
+                    return Vector3.zero;
+                }
+                return m_Movement; 
+            }
+        }
 
         public bool IsAttack
         {
-            get { return m_Attack; }
+
+            get { return !isPlayerInputBlocked && m_Attack; }
         }
 
         private void Awake()
@@ -57,13 +64,11 @@ namespace RpgAdventure
             }
             if (m_Q == true)
             {
-                Debug.Log("Q");
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
             }
             else
             {
-                Debug.Log("no Q");
                 Cursor.visible = false;
                 Cursor.lockState = CursorLockMode.Locked;
             }

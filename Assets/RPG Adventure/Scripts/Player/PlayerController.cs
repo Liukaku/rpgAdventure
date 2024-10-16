@@ -25,6 +25,7 @@ namespace RpgAdventure
         public float rotationSpeed;
         public float speed;
         public Transform attackHand;
+        public bool isRespawning;
 
         public MeleeWeapon meleeWeapon;
 
@@ -36,11 +37,20 @@ namespace RpgAdventure
         private float verticalSpeed;
         private Camera followCamera;
         private HudManager m_hudManager;
+        private Damageable m_damageable;
+
+        private AnimatorStateInfo m_CurrentStateInfo;
+        private AnimatorStateInfo m_NextStateInfo;
+        private bool m_AnimtorIsTransitioning;
 
         private static PlayerController s_Instance;
 
         private readonly int m_hashForwardSpeed = Animator.StringToHash("ForwardSpeed");
         private readonly int m_hashAttackOne = Animator.StringToHash("AttackOne");
+        private readonly int m_hashDeath = Animator.StringToHash("Death");
+
+        // Animator tag hash
+        private readonly int m_hashBlockInput = Animator.StringToHash("BlockInput");
 
         float mDesiredRotation = 0f;
 
@@ -51,15 +61,24 @@ namespace RpgAdventure
             m_ChController = GetComponent<CharacterController>();
             m_playerInput = GetComponent<PlayerInput>();
             m_Animator = GetComponent<Animator>();
+            m_damageable = GetComponent<Damageable>();
             m_hudManager = FindObjectOfType<HudManager>();
             defaultSpeed = speed;
 
             s_Instance = this;
-            m_hudManager.SetMaxHealth(GetComponent<Damageable>().maxHealth);
+            m_hudManager.SetMaxHealth(m_damageable.maxHealth);
         }
 
         void FixedUpdate()
         {
+            CacheAnimationState();
+            UpdateInputBlocking();
+
+            if (isRespawning)
+            {
+                return;
+            }
+
             HandleSprintAnimation();
             HandleVerticalMovement();
 
@@ -169,11 +188,45 @@ namespace RpgAdventure
             meleeWeapon.SetOwner(gameObject);
         }
 
+        public void StartRespawn()
+        {
+            isRespawning = true;
+            transform.position = Vector3.zero;
+            m_damageable.SetInitialHealth();
+            m_hudManager.SetHealth(m_damageable.maxHealth);
+        }
+
+        public void FinishRespawn()
+        {
+            isRespawning = false;
+        }
+
+        public void CacheAnimationState()
+        {
+            m_CurrentStateInfo = m_Animator.GetCurrentAnimatorStateInfo(0);
+            m_NextStateInfo = m_Animator.GetNextAnimatorStateInfo(0);
+            m_AnimtorIsTransitioning = m_Animator.IsInTransition(0);
+
+
+        }
+
+        private void UpdateInputBlocking()
+        {
+            bool inputBlocked = m_CurrentStateInfo.tagHash == m_hashBlockInput && !m_AnimtorIsTransitioning;
+            inputBlocked = inputBlocked | m_NextStateInfo.tagHash == m_hashBlockInput;
+            m_playerInput.isPlayerInputBlocked = inputBlocked;
+        }
+
         public void OnReceiveMessage(MessageType type, Damageable sender, Damageable.DamageMessage message)
         {
             if(type == MessageType.DAMAGED)
             {
                 m_hudManager.SetHealth(sender.CurrentHitpoints);
+            }
+            if(type == MessageType.DEAD)
+            {
+                m_Animator.SetTrigger(m_hashDeath);
+                m_hudManager.SetHealth(0);
             }
         }
     }
