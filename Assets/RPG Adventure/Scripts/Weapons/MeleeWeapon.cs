@@ -86,6 +86,7 @@ namespace RpgAdventure
                 data.amount = damage;
                 data.damager = this;
                 data.damageSource = m_Owner;
+                Debug.Log("shwing");
                 damageable.ApplyDamage(data);
             }
         }

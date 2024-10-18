@@ -6733,6 +6733,10 @@ PrefabInstance:
       propertyPath: freeLookCamera
       value: 
       objectReference: {fileID: 530652923}
+    - target: {fileID: 1630818507, guid: efd24517624bb024ea5348b875bce00c, type: 3}
+      propertyPath: maxHealth
+      value: 1000
+      objectReference: {fileID: 0}
     - target: {fileID: 608557541713450693, guid: efd24517624bb024ea5348b875bce00c, type: 3}
       propertyPath: m_RootOrder
       value: 10

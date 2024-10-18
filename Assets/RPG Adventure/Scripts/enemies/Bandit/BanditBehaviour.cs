@@ -45,6 +45,10 @@ namespace RpgAdventure
 
         private void Update()
         {
+            if (PlayerController.Instance.isPlayerRespawning)
+            {
+                GoToOriginalPosition();
+            }
             GuardPosition();
         }
 
@@ -53,7 +57,7 @@ namespace RpgAdventure
             var target = playerScanner.DetectPlayer(transform);
 
             // player within sight radius
-            if (target)
+            if (target )
             {
                 AttackOrMoveToPlayer(target);
             }
@@ -98,18 +102,28 @@ namespace RpgAdventure
 
             m_TimeSinceLostPlayer += Time.deltaTime;
 
-            Vector3 distanceToHome = transform.position - banditOriginPosition;
-            Boolean distanceX = Math.Abs(distanceToHome.x) > 5.0f;
-            Boolean distanceZ = Math.Abs(distanceToHome.z) > 5.0f;
 
-            if (m_TimeSinceLostPlayer >= timeToStopFollowing && distanceX && distanceZ)
+
+            if (m_TimeSinceLostPlayer >= timeToStopFollowing )
+            {
+                GoToOriginalPosition();
+            }
+            
+        }
+
+        private void GoToOriginalPosition()
+        {
+            Vector3 distanceToHome = transform.position - banditOriginPosition;
+            Boolean distanceX = Math.Abs(distanceToHome.x) > 2.0f;
+            Boolean distanceZ = Math.Abs(distanceToHome.z) > 2.0f;
+
+            if (distanceX || distanceZ)
             {
                 m_Player = null;
                 m_EnemyController.FollowTarget(banditOriginPosition);
                 Debug.Log("returning to home");
                 HandleRotation();
             }
-            
         }
         
 

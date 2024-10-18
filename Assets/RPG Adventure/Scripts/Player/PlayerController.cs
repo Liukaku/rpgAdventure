@@ -18,6 +18,8 @@ namespace RpgAdventure
             }
         }
 
+        public bool isPlayerRespawning { get { return isRespawning; } }
+
         public Quaternion PlayerRotation;
         public float maxForwardSpeed = 0.4f;
         public float gravity = 20.0f;
@@ -25,7 +27,7 @@ namespace RpgAdventure
         public float rotationSpeed;
         public float speed;
         public Transform attackHand;
-        public bool isRespawning;
+        private bool isRespawning;
 
         public MeleeWeapon meleeWeapon;
 
@@ -221,6 +223,7 @@ namespace RpgAdventure
         {
             if(type == MessageType.DAMAGED)
             {
+                Debug.Log("damaged");
                 m_hudManager.SetHealth(sender.CurrentHitpoints);
             }
             if(type == MessageType.DEAD)

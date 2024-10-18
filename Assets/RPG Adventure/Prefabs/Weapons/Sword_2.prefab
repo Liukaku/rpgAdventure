@@ -102,11 +102,11 @@ MonoBehaviour:
     m_Bits: 64
   damage: 10
   attackPoints:
-  - radius: 0.3
+  - radius: 0.15
     offset: {x: -0.17, y: 0.06, z: 0.62}
     rootTransform: {fileID: 5544829122207361179}
-  - radius: 0.3
-    offset: {x: -0.12, y: 0, z: 0.33}
+  - radius: 0.15
+    offset: {x: -0.12, y: 0.03, z: 0.33}
     rootTransform: {fileID: 5544829122207361179}
 --- !u!114 &9158489946713981303
 MonoBehaviour:
