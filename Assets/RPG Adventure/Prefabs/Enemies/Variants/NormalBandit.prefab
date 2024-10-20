@@ -16,6 +16,10 @@ PrefabInstance:
       propertyPath: experience
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 401460301, guid: 23b8b03d51d003041be6fbf2d0e2c1e0, type: 3}
+      propertyPath: m_Radius
+      value: 0.75
+      objectReference: {fileID: 0}
     - target: {fileID: 235837531787766097, guid: 23b8b03d51d003041be6fbf2d0e2c1e0, type: 3}
       propertyPath: m_Name
       value: NormalBandit

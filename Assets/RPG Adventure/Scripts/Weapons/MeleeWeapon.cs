@@ -98,6 +98,7 @@ namespace RpgAdventure
 
         public void BeginAttack()
         {
+            Debug.Log("begin attack");
             m_IsAttack = true;
             m_OriginAttackPos = new Vector3[attackPoints.Length];
 

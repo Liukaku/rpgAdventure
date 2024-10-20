@@ -49,6 +49,7 @@ namespace RpgAdventure
 
         private readonly int m_hashForwardSpeed = Animator.StringToHash("ForwardSpeed");
         private readonly int m_hashAttackOne = Animator.StringToHash("AttackOne");
+        private readonly int m_hashAttackTwo = Animator.StringToHash("AttackTwo");
         private readonly int m_hashDeath = Animator.StringToHash("Death");
 
         // Animator tag hash
@@ -118,6 +119,12 @@ namespace RpgAdventure
             {
                 m_Animator.SetTrigger(m_hashAttackOne);
             }
+            if (m_playerInput.IsAttackTwo)
+            {
+                Debug.Log("isAttackTwo");
+                m_Animator.SetBool(m_hashAttackTwo, true);
+                StartCoroutine(ResetCombo());
+            }
 
         }
 
@@ -149,8 +156,10 @@ namespace RpgAdventure
             }
         }
 
+        // these are fired via animation events in the animator view
         public void MeleeAttackStart()
         {
+            Debug.Log("melee attack start");
             if (meleeWeapon != null)
             {
                 meleeWeapon.BeginAttack();
@@ -231,6 +240,12 @@ namespace RpgAdventure
                 m_Animator.SetTrigger(m_hashDeath);
                 m_hudManager.SetHealth(0);
             }
+        }
+
+        private IEnumerator ResetCombo()
+        {
+            yield return new WaitForSeconds(0.3f);
+            m_Animator.SetBool(m_hashAttackTwo, false);
         }
     }
 

@@ -11,11 +11,15 @@ namespace RpgAdventure
         private static PlayerInput s_Instance;
         private Vector3 m_Movement;
         private bool m_Attack;
+        public bool m_AttackTwo;
         private bool m_Q;
         private Collider[] m_InteractTarget;
 
         public bool isPlayerInputBlocked;
         public float distanceToInteract = 5.0f;
+        public bool canCombo = false;
+        public float comboTimer = 0.0f;
+        public float comboSpace = 0.7f;
 
         public Collider[] interactTarget
         {
@@ -41,6 +45,12 @@ namespace RpgAdventure
         {
 
             get { return !isPlayerInputBlocked && m_Attack; }
+        }
+
+        public bool IsAttackTwo
+        {
+
+            get { return !isPlayerInputBlocked && m_AttackTwo; }
         }
 
         private void Awake()
@@ -77,10 +87,30 @@ namespace RpgAdventure
             {
                 HandleEInteract();
             }
-
-            if (isLeftMouseClick)
+            if (canCombo)
             {
-                HandleLeftMouseButtonDown();
+                comboTimer += Time.deltaTime;
+                if(comboTimer >= comboSpace)
+                {
+                    comboTimer = 0.0f;
+                    canCombo = false;
+                }
+            }
+
+            if (isLeftMouseClick && !m_Q)
+            {
+                Debug.Log("left");
+                
+                if (canCombo && !m_AttackTwo && comboTimer <= comboSpace)
+                {
+
+                    StartCoroutine(TriggerCombo());
+
+                } else
+                {
+                    HandleLeftMouseButtonDown();
+                }
+
             }
             if (isRightMouseClick)
             {
@@ -146,7 +176,20 @@ namespace RpgAdventure
 
             yield return new WaitForSeconds(0.3f);
 
+            canCombo = true;
             m_Attack = false;
+        }
+
+        private IEnumerator TriggerCombo()
+        {
+            Debug.Log("combo");
+            m_AttackTwo = true;
+
+            yield return new WaitForSeconds(0.3f);
+
+            comboTimer = 0.0f;
+            canCombo = false;
+            m_AttackTwo = false;
         }
     }
 }
