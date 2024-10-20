@@ -22,6 +22,8 @@ namespace RpgAdventure
 
         public AttackPoint[] attackPoints = new AttackPoint[0];
 
+        public RandomAudioPlayer SwingAudio;
+
         private bool m_IsAttack = false;
         private Vector3[] m_OriginAttackPos;
         private RaycastHit[] m_RaycastHitCache = new RaycastHit[32];
@@ -98,7 +100,7 @@ namespace RpgAdventure
 
         public void BeginAttack()
         {
-            Debug.Log("begin attack");
+            SwingAudio.PlayRandomClip();
             m_IsAttack = true;
             m_OriginAttackPos = new Vector3[attackPoints.Length];
 
