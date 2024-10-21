@@ -23,6 +23,7 @@ namespace RpgAdventure
         public AttackPoint[] attackPoints = new AttackPoint[0];
 
         public RandomAudioPlayer SwingAudio;
+        public RandomAudioPlayer impactAudio;
 
         private bool m_IsAttack = false;
         private Vector3[] m_OriginAttackPos;
@@ -88,7 +89,10 @@ namespace RpgAdventure
                 data.amount = damage;
                 data.damager = this;
                 data.damageSource = m_Owner;
-                Debug.Log("shwing");
+                if (impactAudio != null)
+                {
+                    impactAudio.PlayRandomClip();
+                }
                 damageable.ApplyDamage(data);
             }
         }
