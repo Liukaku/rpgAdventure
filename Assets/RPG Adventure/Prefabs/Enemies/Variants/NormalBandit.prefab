@@ -72,6 +72,10 @@ PrefabInstance:
       propertyPath: weapon
       value: 
       objectReference: {fileID: 3879349700494468416}
+    - target: {fileID: 4132532509614420488, guid: 23b8b03d51d003041be6fbf2d0e2c1e0, type: 3}
+      propertyPath: attackDistance
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 23b8b03d51d003041be6fbf2d0e2c1e0, type: 3}

@@ -232,6 +232,7 @@ namespace RpgAdventure
         {
             if(type == MessageType.DAMAGED)
             {
+
                 Debug.Log("damaged");
                 m_hudManager.SetHealth(sender.CurrentHitpoints);
             }

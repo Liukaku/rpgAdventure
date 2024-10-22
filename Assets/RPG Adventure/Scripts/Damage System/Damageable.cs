@@ -58,7 +58,6 @@ namespace RpgAdventure
 
         public void ApplyDamage(DamageMessage data)
         {
-            Debug.Log("shwing received");
             if (CurrentHitpoints <= 0 || isInvuln)
             {
                 return;
@@ -67,8 +66,6 @@ namespace RpgAdventure
             Vector3 positionToDamager = data.damageSource.transform.position - transform.position;
             positionToDamager.y = 0;
 
-            Debug.Log("Vector 3: " + Vector3.Angle(transform.forward, positionToDamager));
-            Debug.Log("hit angle: " + hitAngle * 0.5);
             if (Vector3.Angle(transform.forward, positionToDamager) > hitAngle * 0.5) 
             {
                 return;
@@ -83,7 +80,6 @@ namespace RpgAdventure
             for(int i = 0; i < onDamageMessageReceivers.Count; i++)
             {
                 var receiver = onDamageMessageReceivers[i] as IMessageReceiver;
-                Debug.Log("do damage");
                 receiver.OnReceiveMessage(messageType, this, data);
 
             }

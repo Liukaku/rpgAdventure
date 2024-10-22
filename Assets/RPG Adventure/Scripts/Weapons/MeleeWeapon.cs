@@ -57,7 +57,7 @@ namespace RpgAdventure
                         
                         if(collider != null)
                         {
-
+                            Debug.Log("checkDamage");
                             CheckDamage(collider, ap);
                         }
                     }

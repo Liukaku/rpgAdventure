@@ -162,12 +162,12 @@ namespace RpgAdventure
 
         public void MeleeAttackEnd()
         {
-            weapon.BeginAttack();
+            weapon.EndAttack();
         }
 
         public void MeleeAttackStart()
         {
-            weapon.EndAttack();
+            weapon.BeginAttack();
         }
 
         void HandleRotation()
