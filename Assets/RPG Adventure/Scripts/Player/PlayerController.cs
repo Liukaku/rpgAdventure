@@ -28,6 +28,8 @@ namespace RpgAdventure
         public float speed;
         public Transform attackHand;
         private bool isRespawning;
+        public RandomAudioPlayer walkSound;
+        public RandomAudioPlayer runSound;
 
         public MeleeWeapon meleeWeapon;
 
@@ -51,6 +53,7 @@ namespace RpgAdventure
         private readonly int m_hashAttackOne = Animator.StringToHash("AttackOne");
         private readonly int m_hashAttackTwo = Animator.StringToHash("AttackTwo");
         private readonly int m_hashDeath = Animator.StringToHash("Death");
+        private readonly int m_hashFootFall = Animator.StringToHash("FootFall");
 
         // Animator tag hash
         private readonly int m_hashBlockInput = Animator.StringToHash("BlockInput");
@@ -125,7 +128,7 @@ namespace RpgAdventure
                 m_Animator.SetBool(m_hashAttackTwo, true);
                 StartCoroutine(ResetCombo());
             }
-
+            //PlayWalkAudio();
         }
 
         void HandleRotation()
@@ -210,6 +213,29 @@ namespace RpgAdventure
         public void FinishRespawn()
         {
             isRespawning = false;
+        }
+
+        public void PlayWalkAudio()
+        {
+            float footFallCurve = m_Animator.GetFloat(m_hashFootFall);
+            //if (footFallCurve > 0.01f && !walkSound.isPlaying && walkSound.canPlay)
+            if (true)
+            {
+                walkSound.isPlaying = true;
+                walkSound.PlayRandomClip(0.1f);
+                walkSound.canPlay = false;
+            } else if (walkSound.isPlaying)
+            {
+                walkSound.isPlaying = false;
+            } else if (footFallCurve < 0.01f && !walkSound.canPlay)
+            {
+                walkSound.canPlay = true;
+            }
+        }
+
+        public void PlaySprintAudio()
+        {
+            runSound.PlayRandomClip(0.1f);
         }
 
         public void CacheAnimationState()

@@ -91,7 +91,7 @@ namespace RpgAdventure
                 data.damageSource = m_Owner;
                 if (impactAudio != null)
                 {
-                    impactAudio.PlayRandomClip();
+                    impactAudio.PlayRandomClip(0.3f);
                 }
                 damageable.ApplyDamage(data);
             }
@@ -104,7 +104,7 @@ namespace RpgAdventure
 
         public void BeginAttack()
         {
-            SwingAudio.PlayRandomClip();
+            SwingAudio.PlayRandomClip(0.3f);
             m_IsAttack = true;
             m_OriginAttackPos = new Vector3[attackPoints.Length];
 

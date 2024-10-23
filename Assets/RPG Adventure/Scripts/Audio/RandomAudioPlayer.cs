@@ -19,14 +19,17 @@ namespace RpgAdventure
         public float randomAudioRangeMin = 0.6f;
         public float randomAudioRangeMax = 1.05f;
 
+        public bool canPlay;
+        public bool isPlaying;
+
         private void Awake()
         {
             m_AudioSource = GetComponent<AudioSource>();
         }
 
-        public void PlayRandomClip()
+        public void PlayRandomClip(float cutOffTime)
         {
-            if (m_AudioSource.time < 0.3 && m_AudioSource.time != 0)
+            if (m_AudioSource.time < cutOffTime && m_AudioSource.time != 0)
             {
                 return;
             }
