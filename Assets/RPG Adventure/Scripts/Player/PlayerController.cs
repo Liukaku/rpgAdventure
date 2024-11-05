@@ -148,7 +148,7 @@ namespace RpgAdventure
 
             if (Input.GetKey(KeyCode.LeftShift))
             {
-                speed = 20f;
+                speed = 15f;
                 maxForwardSpeed = Mathf.MoveTowards(maxForwardSpeed, 0.6f, Time.fixedDeltaTime);
 
             } else
@@ -205,7 +205,8 @@ namespace RpgAdventure
         public void StartRespawn()
         {
             isRespawning = true;
-            transform.position = Vector3.zero;
+            //transform.position = Vector3.zero;
+            transform.position = new Vector3(170.4f, 6.23f, 48.4f);
             m_damageable.SetInitialHealth();
             m_hudManager.SetHealth(m_damageable.maxHealth);
         }
